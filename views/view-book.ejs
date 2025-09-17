@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= book.title %> - Library</title>
+    <link rel="stylesheet" href="/css/view-book.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dongle&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="page-container">
+        <div class="page-header">
+            <div class="circles">
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle filled"></div>
+            </div>
+            <h1 class="page-title">BOOK DETAILS</h1>
+            <div class="circles right-circles">
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+            </div>
+        </div>
+        <div class="divider"></div>
+
+        <div class="back-button-container">
+            <a href="/" class="back-button">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+        </div>
+
+        <div class="book-details-container">
+            <div class="book-header">
+                <% if (book.cover_filename) { %>
+                    <img src="/covers/<%= book.cover_filename %>" alt="<%= book.title %>" class="book-cover">
+                <% } else { %>
+                    <div class="book-cover" style="background-color: #ddd; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-book" style="font-size: 3rem; color: #999;"></i>
+                    </div>
+                <% } %>
+                
+                <div class="book-info">
+                    <h1 class="book-title"><%= book.title %></h1>
+                    <p class="book-author">by <%= book.author %></p>
+                    
+                    <div class="book-meta">
+                        <div class="meta-item">
+                            <div class="meta-label">Year</div>
+                            <div class="meta-value"><%= book.year || 'N/A' %></div>
+                        </div>
+                        
+                        <div class="meta-item">
+                            <div class="meta-label">Status</div>
+                            <div class="meta-value">
+                                <span class="status-badge status-<%= book.status.replace(' ', '-') %>">
+                                    <%= book.status %>
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="meta-item">
+                            <div class="meta-label">Total Pages</div>
+                            <div class="meta-value"><%= book.pages || 'N/A' %></div>
+                        </div>
+                        
+                        <div class="meta-item">
+                            <div class="meta-label">Rating</div>
+                            <div class="meta-value">
+                                <% if (book.rating) { %>
+                                    <div class="rating-stars">
+                                        <% for (let i = 1; i <= 5; i++) { %>
+                                            <span class="<%= i <= book.rating ? 'star-filled' : 'star-empty' %>">★</span>
+                                        <% } %>
+                                    </div>
+                                <% } else { %>
+                                    Not rated
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+
+                    <% if (book.pages && book.read_pages) { %>
+                        <div class="progress-container">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: <%= (book.read_pages / book.pages) * 100 %>%;"></div>
+                            </div>
+                            <div class="progress-text">
+                                <%= book.read_pages %> / <%= book.pages %> pages read
+                                (<%= Math.round((book.read_pages / book.pages) * 100) %>%)
+                            </div>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+
+            <div class="review-section">
+                <h2>Review</h2>
+                <% if (book.review) { %>
+                    <div class="review-content"><%= book.review %></div>
+                <% } else { %>
+                    <p class="no-review">No review yet</p>
+                <% } %>
+            </div>
+
+            <div class="action-buttons">
+                <form action = "/book/<%= book.id %>/edit" method = "get">
+                    <button type = "submit" class = "edit-button">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                </form>
+                <form action="/book/<%= book.id %>/delete" method="POST">
+                    <button type="submit" class="delete-button">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

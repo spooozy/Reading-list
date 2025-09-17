@@ -1,0 +1,281 @@
+* {
+    line-height: 1.2;
+}
+
+body{
+    background-color: #f8f2e6;
+    color: #33342e;
+    font-family: 'Dongle';
+    border: 3px solid #33342e;
+    border-radius: 8px;
+}
+
+.page-container {
+    padding: 5px 0;
+}
+
+.page-header{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 1.5rem;
+    min-height: 35px; 
+}
+
+.circles {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    min-width: 100px;
+    margin-left: 10px;
+}
+
+.right-circles {
+    visibility: hidden;
+}
+
+.circle {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 3px solid #33342e;
+    background-color: transparent;
+    flex-shrink: 0;
+}
+
+.circle.filled {
+    background-color: #33342e;
+    border-color: #33342e;
+}
+
+.page-title {
+    text-align: center;
+    font-size: 2.1rem;
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+    line-height: 1; 
+}
+
+.divider {
+    width: 100%;
+    height: 2px;
+    background-color: #33342e;
+}
+
+.back-button-container {
+    padding: 15px 20px;
+}
+
+.back-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #33342e;
+    text-decoration: none;
+    font-size: 20px;
+    padding: 8px 16px;
+    border: 1px solid #33342e;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+.back-button:hover {
+    background-color: #33342e;
+    color: #f8f2e6;
+}
+
+.book-details-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.book-header {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 30px;
+    align-items: flex-start;
+}
+
+.book-cover {
+    width: 200px;
+    height: 300px;
+    object-fit: cover;
+    border: 3px solid #33342e;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.book-info {
+    flex: 1;
+}
+
+.book-title {
+    font-size: 2.5rem;
+    margin: 0;
+    color: #33342e;
+}
+
+.book-author {
+    font-size: 1.8rem;
+    color: #666;
+    margin: 5px 0;
+}
+
+.book-meta {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.meta-item {
+    background: rgba(255, 255, 255, 0.767);
+    padding: 15px;
+    border-radius: 8px;
+    border: 2px solid #33342e;
+}
+
+.meta-label {
+    font-weight: bold;
+    color: #33342e;
+    font-size: 1.3rem;
+    margin-bottom: 5px;
+}
+
+.meta-value {
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.progress-container {
+    margin: 25px 0;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 20px;
+    background-color: #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.progress-fill {
+    height: 100%;
+    background-color: #33342e;
+    border-radius: 10px;
+    transition: width 0.3s ease;
+}
+
+.progress-text {
+    text-align: center;
+    font-size: 1.3rem;
+    color: #333;
+}
+
+.review-section {
+    background: rgba(255, 255, 255, 0.767);
+    padding: 0px 25px;
+    padding-bottom: 10px;
+    border-radius: 12px;
+    border: 2px solid #33342e;
+}
+
+.review-section h3 {
+    color: #33342e;
+    font-size: 1.8rem;
+    padding-bottom: 10px;
+}
+
+.review-content {
+    font-size: 1.5rem;
+    line-height: 1.4;
+    color: #333;
+}
+
+.no-review {
+    font-style: italic;
+    color: #666;
+    font-size: 1.5rem;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.edit-button,
+.delete-button {
+    padding: 15px 40px;
+    border: none;
+    border-radius: 25px;
+    font-family: 'Dongle';
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.edit-button {
+    background-color: #33342e;
+    color: white;
+}
+
+.edit-button:hover {
+    background-color: #55554e;
+}
+
+.delete-button {
+    background-color: #dc3545;
+    color: white;
+}
+
+.delete-button:hover {
+    background-color: #c82333;
+}
+
+.rating-stars {
+    display: flex;
+    gap: 5px;
+}
+
+.star-filled {
+    color: #ffd700;
+    font-size: 1.8rem;
+}
+
+.star-empty {
+    color: #ccc;
+    font-size: 1.8rem;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+.status-want-to-read {
+    background-color: #6c757d;
+    color: white;
+}
+
+.status-reading {
+    background-color: #17a2b8;
+    color: white;
+}
+
+.status-finished {
+    background-color: #28a745;
+    color: white;
+}

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= isEdit ? 'Edit ' + book.title : 'Add Book' %> - Library</title>
+    <link rel="stylesheet" href="/css/book-form.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dongle&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="page-container">
+        <div class="page-header">
+            <div class="circles">
+                <div class="circle"></div>
+                <div class="circle filled"></div>
+                <div class="circle"></div>
+            </div>
+            <h1 class="page-title"><%= isEdit ? 'EDIT BOOK' : 'ADD BOOK' %></h1>
+            <div class="circles right-circles">
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+            </div>
+        </div>
+        <div class="divider"></div>
+        
+        <% if (typeof error !== 'undefined') { %>
+            <div class="error-message">
+                <i class="fas fa-exclamation-circle"></i>
+                <span><%= error %></span>
+            </div>
+        <% } %>
+        
+        <div class="back-button-container">
+            <a href="<%= isEdit ? '/book/' + book.id : '/' %>" class="back-button">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+        </div>
+
+        <div class="form-container">
+            <form action="<%= isEdit ? '/book/' + book.id + '/edit' : '/add' %>" method="POST" class="book-form" enctype="multipart/form-data">
+                <% if (isEdit && book.cover_filename) { %>
+                    <input type="hidden" name="existing_cover" value="<%= book.cover_filename %>">
+                <% } %>
+
+                <div class="form-section">
+                    <h2>Basic Information</h2>
+                    <div class="form-group">
+                        <label for="title">Title *</label>
+                        <input type="text" id="title" name="title" value="<%= book.title || '' %>" required class="form-input">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="author">Author *</label>
+                        <input type="text" id="author" name="author" value="<%= book.author || '' %>" required class="form-input">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="year">Year</label>
+                        <input type="number" id="year" name="year" value="<%= book.year || '' %>" min="0" max="<%= new Date().getFullYear() %>" class="form-input">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pages">Total Pages</label>
+                        <input type="number" id="pages" name="pages" value="<%= book.pages || '' %>" min="1" class="form-input">
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2>Reading Progress</h2>
+                    
+                    <div class="form-group">
+                        <label for="status">Status *</label>
+                        <select id="status" name="status" required class="form-select">
+                            <option value="want to read" <%= book.status === 'want to read' ? 'selected' : '' %>>Want to Read</option>
+                            <option value="in progress" <%= book.status === 'in progress' ? 'selected' : '' %>>In Progress</option>
+                            <option value="read" <%= book.status === 'read' ? 'selected' : '' %>>Read</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" id="readPagesGroup" style="display: <%= (book.status === 'in progress' || book.status === 'read') ? 'block' : 'none' %>;">
+                        <label for="read_pages">Pages Read</label>
+                        <input type="number" id="read_pages" name="read_pages" value="<%= book.read_pages || '' %>" min="0" class="form-input">
+                    </div>
+
+                    <div class="form-group" id="ratingGroup" style="display: <%= book.status === 'read' ? 'block' : 'none' %>;">
+                        <label for="rating">Rating (1-5)</label>
+                        <div class="rating-stars">
+                            <% for (let i = 1; i <= 5; i++) { %>
+                                <input type="radio" id="star<%= i %>" name="rating" value="<%= i %>" 
+                                       <%= book.rating === i ? 'checked' : '' %>>
+                                <label for="star<%= i %>" class="star-label" 
+                                       style="color: <%= book.rating && i <= book.rating ? '#ffd700' : '#ccc' %>">★</label>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2>Additional Information</h2>
+                    
+                    <div class="form-group">
+                        <label for="review">Review</label>
+                        <textarea id="review" name="review" rows="4" class="form-textarea" placeholder="Share your thoughts about the book..."><%= book.review || '' %></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cover">Book Cover</label>
+                        <input type="file" id="cover" name="cover" accept="image/*" class="form-file">
+                        <small>Supported formats: JPG, PNG, GIF</small>
+                        <small>Max size: 5MB</small>
+                        
+                        <% if (isEdit && book.cover_filename) { %>
+                            <div class="current-cover" style="margin-top: 10px;">
+                                <p style="margin-bottom: 5px; font-size: 14px;">Current cover:</p>
+                                <img src="/covers/<%= book.cover_filename %>" alt="Current cover" style="max-width: 100px; border-radius: 4px;">
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="cancel-button" onclick="window.location.href='<%= isEdit ? '/book/' + book.id : '/' %>'">Cancel</button>
+                    <button type="submit" class="submit-button"><%= isEdit ? 'Update' : 'Save' %></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+    document.getElementById('status').addEventListener('change', function() {
+        const readPagesGroup = document.getElementById('readPagesGroup');
+        const ratingGroup = document.getElementById('ratingGroup');
+        
+        if (this.value === 'in progress' || this.value === 'read') {
+            readPagesGroup.style.display = 'block';
+        } else {
+            readPagesGroup.style.display = 'none';
+        }
+        
+        if (this.value === 'read') {
+            ratingGroup.style.display = 'block';
+        } else {
+            ratingGroup.style.display = 'none';
+        }
+    });
+
+    document.querySelector('.book-form').addEventListener('submit', function(e) {
+        const pages = parseInt(document.getElementById('pages').value) || 0;
+        const readPages = parseInt(document.getElementById('read_pages').value) || 0;
+        
+        if (readPages > pages) {
+            e.preventDefault();
+            alert('Pages read cannot be greater than total pages!');
+        }
+    });
+
+    document.querySelectorAll('.star-label').forEach(star => {
+        star.addEventListener('click', function() {
+            const rating = this.previousElementSibling.value;
+            document.querySelectorAll('.star-label').forEach(s => {
+                s.style.color = s.previousElementSibling.value <= rating ? '#ffd700' : '#ccc';
+            });
+        });
+    });
+
+    document.getElementById('pages').addEventListener('change', function() {
+        const pagesInput = this;
+        const readPagesInput = document.getElementById('read_pages');
+        readPagesInput.max = pagesInput.value;
+        
+        if (parseInt(readPagesInput.value) > parseInt(pagesInput.value)) {
+            readPagesInput.value = pagesInput.value;
+        }
+    });
+    </script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dongle&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="page-container">
+        <div class="page-header">
+            <div class = "circles">
+                <div class = "circle filled"></div>
+                <div class = "circle"></div>
+                <div class = "circle"></div>
+            </div>
+            <h1 class="page-title">BO_OKS</h1>
+            <div class="circles right-circles">
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class = "functions-bar">
+            <div class = "pages-route">
+                <a href = "/add" class = "icon-link" title = "Add book">
+                    <i class="fa-solid fa-plus"></i>
+                </a>
+                <a href = "index.ejs" class = "icon-link" title = "Settings">
+                    <i class="fa-solid fa-gear"></i>
+                </a>
+            </div>
+            <div class = "search-section">
+                <div class="search-container">
+                    <input type="text" class="search-input" placeholder="Search...">
+                    <button class="search-button">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="books-container">
+            <% if (books && books.length > 0) { %>
+                <% books.forEach(function(book) { %>
+                    <div class="book-card">
+                        <a href="/book/<%= book.id %>" class="book-card-link">
+                            <div class="book-cover">
+                                <% if (book.cover_filename) { %>
+                                    <img src="/covers/<%= book.cover_filename %>" alt="<%= book.title %>" class="book-image">
+                                <% } else { %>
+                                    <div class="book-placeholder">
+                                        <i class="fas fa-book"></i>
+                                    </div>
+                                <% } %>
+                                <div class="book-status <%= book.status.replace(/\s+/g, '-') %>">
+                                    <%= book.status %>
+                                </div>
+                            </div>
+                            <div class="book-info">
+                                <h3 class="book-title"><%= book.title %></h3>
+                                <p class="book-author"><%= book.author %></p>
+                            </div>
+                        </a>
+                    </div>
+                <% }); %>
+            <% } else { %>
+                <div class="empty-library">
+                    <i class="fas fa-book-open"></i>
+                    <p>No books in your library yet</p>
+                    <a href="/add" class="add-first-book">Add your first book</a>
+                </div>
+            <% } %>
+        </div>
+    </div>
+</body>
+</html>
