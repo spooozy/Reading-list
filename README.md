@@ -14,27 +14,26 @@
 ### Getting Started
 
 1. Clone the repository
-
-`git clone https://github.com/yourusername/book-library.git`
-
-`cd book-library`
-
+```
+git clone https://github.com/yourusername/book-library.git
+cd book-library
+```
 2. Install dependencies
-
-`npm install`
-
+```
+npm install
+```
 3. Start the application (creates database and tables)
-
-`node index.js`
-
+```
+node index.js
+```
 4. Add test data (optional)
-
-`node init-test-data.js`
-
+```
+node init-test-data.js
+```
 5. Open your browser
-
-`http://localhost:3000`
-
+```
+http://localhost:3000
+```
 
 ### Test Data
 The application includes sample data with 7 books:
