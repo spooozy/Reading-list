@@ -24,16 +24,47 @@
             </div>
         </div>
         <div class="divider"></div>
-        <div class = "functions-bar">
-            <div class = "pages-route">
-                <a href = "/add" class = "icon-link" title = "Add book">
+        <div class="functions-bar">
+            <div class="pages-route">
+                <div class="filter-dropdown">
+                    <button class="filter-toggle icon-link" title="Filter by status">
+                        <i class="fa-solid fa-caret-down"></i>
+                    </button>
+                    <div class="filter-menu">
+                        <form action="/" method="GET" class="filter-form">
+                            <div class="filter-option">
+                                <input type="radio" id="filter-all" name="status" value="" 
+                                    <%= currentFilter === '' ? 'checked' : '' %>>
+                                <label for="filter-all">All Books</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="radio" id="filter-want" name="status" value="want to read" 
+                                    <%= currentFilter === 'want to read' ? 'checked' : '' %>>
+                                <label for="filter-want">Want to Read</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="radio" id="filter-progress" name="status" value="in progress" 
+                                    <%= currentFilter === 'in progress' ? 'checked' : '' %>>
+                                <label for="filter-progress">In Progress</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="radio" id="filter-read" name="status" value="read" 
+                                    <%= currentFilter === 'read' ? 'checked' : '' %>>
+                                <label for="filter-read">Read</label>
+                            </div>
+                            <button type="submit" class="filter-submit">Apply</button>
+                        </form>
+                    </div>
+                </div>
+                <a href="/add" class="icon-link" title="Add book">
                     <i class="fa-solid fa-plus"></i>
                 </a>
-                <a href = "index.ejs" class = "icon-link" title = "Settings">
+                <a href="index.ejs" class="icon-link" title="Settings">
                     <i class="fa-solid fa-gear"></i>
                 </a>
             </div>
-            <div class = "search-section">
+            
+            <div class="search-section">
                 <div class="search-container">
                     <input type="text" class="search-input" placeholder="Search...">
                     <button class="search-button">

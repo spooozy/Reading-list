@@ -50,12 +50,23 @@ const upload = multer({
 });
 
 app.get("/", function(request, response){
+    const statusFilter = request.query.status;
+    
     bookDao.getAllBooks((err, books) => {
         if (err) {
             console.error("Error receiving books: ", err);
-            return response.status(500).send("Server Error")
+            return response.status(500).send("Server Error");
         }
-    response.render('index', { books: books });
+        
+        let filteredBooks = books;
+        if (statusFilter) {
+            filteredBooks = books.filter(book => book.status === statusFilter);
+        }
+        
+        response.render('index', { 
+            books: filteredBooks,
+            currentFilter: statusFilter || ''
+        });
     });
 });
 
