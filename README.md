@@ -15,7 +15,7 @@
 
 1. Clone the repository
 ```
-git clone https://github.com/yourusername/book-library.git
+git clone git@github.com:spooozy/Reading-list.git
 cd book-library
 ```
 2. Install dependencies
